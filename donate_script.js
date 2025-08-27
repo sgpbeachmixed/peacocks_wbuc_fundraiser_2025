@@ -71,7 +71,7 @@ donationInput.addEventListener("input", () => {
   const value = donationInput.value.trim();
 
   if (!/^\d+$/.test(value)) {
-    donationError.textContent = "Please enter a valid whole number (e.g. 10)";
+    donationError.textContent = "Please enter a valid whole number (e.g. 100)";
     donationInput.style.borderColor = "red";
     return;
   }
