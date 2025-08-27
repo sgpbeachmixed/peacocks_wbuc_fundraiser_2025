@@ -1,0 +1,96 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">   
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Peacocks Fundraiser</h1>
+    <kbd>1. Input donation amount</kbd>
+    <div class="container">
+        <!-- First Column -->
+        <div class="column">
+        <h2>Donation Amount</h2>
+        <input
+            type="text"
+            id="donationAmount"
+            placeholder="SGD"
+        />
+        <p id="donationError" class="error-message"></p>
+        </div>
+
+        <!-- Second Column -->
+        <div class="column">
+            <h2># of Baseline Runs</h2>
+            <div class="input-group">
+                <input type="text" id="teamBaseline" class="integerInput" placeholder="Enter qty" />
+                <label for="teamBaseline">team baselines <mark>($2 each)</mark></label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="assignedBaseline" class="integerInput" placeholder="Enter qty" />
+                <label for="assignedBaseline">assigned baselines <mark>($5 each)</mark></label>
+            </div>
+            <button id="shuffleBtn">Shuffle Combination</button>
+        </div>
+    </div>
+    <hr/>
+    <kbd>2. Choose your runners (if applicable)</kbd>
+    <div class="container">
+        <!-- Name Checkbox List -->
+        <div class="column" style="text-align: center;">
+            <h3 style="text-align: center;">Assign baseline run(s) to:</h3>
+            <label id="nameLimitLabel">You can select 0 names (0 selected)</label>
+            <div id="nameList" class="name-grid">
+                <label class="name-card">
+                <img src="https://via.placeholder.com/80" alt="Alice" />
+                <input type="checkbox" class="nameCheck" value="Alice" />
+                <span>Alice</span>
+                </label>
+
+                <label class="name-card">
+                <img src="https://via.placeholder.com/80" alt="Bob" />
+                <input type="checkbox" class="nameCheck" value="Bob" />
+                <span>Bob</span>
+                </label>
+
+                <label class="name-card">
+                <img src="https://via.placeholder.com/80" alt="Charlie" />
+                <input type="checkbox" class="nameCheck" value="Charlie" />
+                <span>Charlie</span>
+                </label>
+
+                <label class="name-card">
+                <img src="https://via.placeholder.com/80" alt="Diana" />
+                <input type="checkbox" class="nameCheck" value="Diana" />
+                <span>Diana</span>
+                </label>
+
+                <label class="name-card">
+                <img src="https://via.placeholder.com/80" alt="Eli" />
+                <input type="checkbox" class="nameCheck" value="Eli" />
+                <span>Eli</span>
+                </label>
+            </div>
+            <p id="nameError" class="error-message"></p>
+        </div>
+    </div>
+    <hr/>
+    <!-- <h2 style="text-align: center;">Payment</h2>
+    <div class="container input-row">
+        <p>Please upload screenshot of funds transfer</p>
+        <input type="file" id="paymentScreenshot" accept="image/*" />
+    </div> -->
+    <kbd>3. Confirm and make payment</kbd>
+    <div class="container">
+        <button id="nextBtn" type="button" disabled>Next</button>
+        <p id="submitStatus" class="error-message"></p>
+        <progress id="loading" style="display: none; max-width: 50px;"/>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
