@@ -96,6 +96,7 @@ button:hover {
   align-items: center;
   width: 200px;
   padding: 10px;
+  background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
   cursor: pointer;
@@ -107,8 +108,12 @@ button:hover {
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
 }
 
+.name-card span {
+  color: black;
+}
+
 .name-card img {
-  width: 100px;
+  height: 150px;
   object-fit: cover;
   margin-bottom: 8px;
 }

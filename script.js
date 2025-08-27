@@ -58,7 +58,7 @@ function updateNameLabel() {
     const limit = parseInt(integer2Input.value) || 0;
     const selectedCount = [...checkboxes].filter(cb => cb.checked).length;
 
-    nameLimitLabel.textContent = `You can select ${limit} name${limit !== 1 ? 's' : ''} (${selectedCount} selected)`;
+    nameLimitLabel.textContent = `You can select up to ${limit} name${limit !== 1 ? 's' : ''} (${selectedCount} selected)`;
 
     // Disable unchecked checkboxes if limit reached
     checkboxes.forEach(cb => {
@@ -202,7 +202,11 @@ document.getElementById("nextBtn").addEventListener("click", () => {
     const encodedDonation = encodeURIComponent(donation);
     const encodedTeam = encodeURIComponent(teamBaseline);
     const encodedAssigned = encodeURIComponent(assignedBaseline);
-    const encodedNames = encodeURIComponent(selectedNames);
+    var encodedNames = encodeURIComponent(selectedNames);
+
+    if (selectedNames == "") {
+      encodedNames = encodeURIComponent("none");
+    }
 
     // Construct the prefilled Google Form URL
     const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
