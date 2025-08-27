@@ -1,162 +1,82 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">   
-    <title>Hello world!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto Mono" rel="stylesheet">
+    <title>Peacocks Fundraiser WBUC 2025</title>
   </head>
   <body>
-    <h1 style="text-align: center;">Peacocks Fundraiser</h1>
-    <kbd>1. Input donation amount</kbd>
-    <div class="container">
-        <!-- First Column -->
-        <div class="column">
-        <h2>Donation Amount</h2>
-        <input
-            type="text"
-            id="donationAmount"
-            placeholder="SGD"
-        />
-        <p id="donationError" class="error-message"></p>
-        </div>
+    <h1 style="text-align: center;">Peacocks WBUC 2025 Fundraiser</h1>
+    <p style="padding: 20px;">
+    Thank you for supporting SGP Beach Mixed Team for WBUC 2025!! We've been training hard to bring our best performance to Portugal this November.
+    <br><br>
+    We are pledging to complete baseline runs to raise funds & alleviate the cost of this self-funded campaign. Our heartfelt thanks for being a part of our journey &#10084;&#65039;  &#128520; 
+    <br><br>
+    <cite>— Peacocks 2025</cite>
+    </p>
+    
+    <button id="shakeBtn" class="shake-button" onclick="window.open('donate.html', '_blank')">Click to support</button>
 
-        <!-- Second Column -->
-        <div class="column">
-            <h2># of Baseline Runs</h2>
-            <div class="input-group">
-                <input type="text" id="teamBaseline" class="integerInput" placeholder="Enter qty" />
-                <label for="teamBaseline">team baselines <mark>($2 each)</mark></label>
-            </div>
-            <div class="input-group">
-                <input type="text" id="assignedBaseline" class="integerInput" placeholder="Enter qty" />
-                <label for="assignedBaseline">assigned baselines <mark>($5 each)</mark></label>
-            </div>
-            <button id="shuffleBtn">Shuffle Combination</button>
+    <div class="faq-container">
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <div class="faq-item">
+        <div class="faq-question">How does this fundraiser work?</div>
+        <div class="faq-answer">
+            Donors can select from 2 types of baseline runs.<br><br>
+            <u>For $2,</u> 1 baseline run will be added to the team's total. These runs will be distributed evenly among the team.<br>
+            <u>For $5,</u> you can assign 1 baseline run to a specific player on the team.
         </div>
     </div>
-    <hr/>
-    <kbd>2. Choose your runners (if applicable)</kbd>
-    <div class="container">
-        <!-- Name Checkbox List -->
-        <div class="column" style="text-align: center;">
-            <h3 style="text-align: center;">Assign baseline run(s) to:</h3>
-            <label id="nameLimitLabel">You can select 0 names (0 selected)</label>
-            <div id="nameList" class="name-grid">
-                <label class="name-card">
-                <img src="running/prem.png" alt="Prem" />
-                <input type="checkbox" class="nameCheck" value="Prem" />
-                <span>Prem</span>
-                </label>
 
-                <label class="name-card">
-                <img src="running/ziang.png" alt="Zi Ang" />
-                <input type="checkbox" class="nameCheck" value="Zi Ang" />
-                <span>Zi Ang</span>
-                </label>
+    <div class="faq-item active">
+      <div class="faq-question">How do I contribute?</div>
+      <div class="faq-answer">
+        1. Click on support button above to start.<br>
+        2. Enter the donation amount / no. of baseline runs<br>
+        3. You will be redirected to a form to transfer funds and upload payment proof.
+      </div>
+    </div>
 
-                <label class="name-card">
-                <img src="running/jiayee.png" alt="Jia-Yee" />
-                <input type="checkbox" class="nameCheck" value="Jia-Yee" />
-                <span>Jia-Yee</span>
-                </label>
+    <div class="faq-item">
+      <div class="faq-question">How long will this fundraiser go on?</div>
+      <div class="faq-answer">It will be open to contributions till the end of September 2025.</div>
+    </div>
 
-                <label class="name-card">
-                <img src="running/vanice.png" alt="Vanice" />
-                <input type="checkbox" class="nameCheck" value="Vanice" />
-                <span>Vanice</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/aaron.png" alt="Aaron" />
-                <input type="checkbox" class="nameCheck" value="Aaron" />
-                <span>Aaron</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/janice.png" alt="Janice" />
-                <input type="checkbox" class="nameCheck" value="Janice" />
-                <span>Janice</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/yanling.png" alt="Yan Ling" />
-                <input type="checkbox" class="nameCheck" value="Yan Ling" />
-                <span>Yan Ling</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/jiawei.png" alt="Jia Wei" />
-                <input type="checkbox" class="nameCheck" value="Jia Wei" />
-                <span>Jia Wei</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/fuen.png" alt="Fu En" />
-                <input type="checkbox" class="nameCheck" value="Fu En" />
-                <span>Fu En</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/xy.png" alt="XY" />
-                <input type="checkbox" class="nameCheck" value="XY" />
-                <span>XY</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/jamin.png" alt="Jamin" />
-                <input type="checkbox" class="nameCheck" value="Jamin" />
-                <span>Jamin</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/taiyu.png" alt="Tai Yu" />
-                <input type="checkbox" class="nameCheck" value="Tai Yu" />
-                <span>Tai Yu</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/tiffany.png" alt="Tiffany" />
-                <input type="checkbox" class="nameCheck" value="Tiffany" />
-                <span>Tiffany</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/cynthia.png" alt="Cynthia" />
-                <input type="checkbox" class="nameCheck" value="Cynthia" />
-                <span>Cynthia</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/deme.png" alt="Deme" />
-                <input type="checkbox" class="nameCheck" value="Deme" />
-                <span>Deme</span>
-                </label>
-
-                <label class="name-card">
-                <img src="running/kelly.png" alt="Kelly" />
-                <input type="checkbox" class="nameCheck" value="Kelly" />
-                <span>Kelly</span>
-                </label>
-            </div>
-            <p id="nameError" class="error-message"></p>
+    <div class="faq-item">
+        <div class="faq-question">More examples</div>
+        <div class="faq-answer">
+            For $11, you can assign 3 runs to the team & 1 run to Deme, <br><p>(3 x $2) + (1 x $5) = $11</p>
+            For $50, you can assign 8 runs to Yanling & 2 runs to Prem<br><p>(8 + 2) x $5 = $50</p>
         </div>
     </div>
-    <hr/>
-    <!-- <h2 style="text-align: center;">Payment</h2>
-    <div class="container input-row">
-        <p>Please upload screenshot of funds transfer</p>
-        <input type="file" id="paymentScreenshot" accept="image/*" />
-    </div> -->
-    <kbd>3. Confirm and make payment</kbd>
-    <div class="container">
-        <button id="nextBtn" type="button" disabled>Next</button>
-        <p id="submitStatus" class="error-message"></p>
-        <progress id="loading" style="display: none; max-width: 50px;"/>
+
+    <div class="faq-item">
+        <div class="faq-question">How do I view the sprints leaderboard?</div>
+        <div class="faq-answer">
+            WIP
+        </div>
     </div>
+  </div>
+  <p style="text-align: center; padding-bottom: 20px;">Reach out to us on 
+    <a href="https://www.instagram.com/sgx.beach" target="_blank" rel="noopener noreferrer" style="color:#3180ff; font-weight:bold; text-decoration:none;">
+        @sgx.beach
+    </a> and 
+    <a href="https://www.instagram.com/shiokingyourpeacock" target="_blank" rel="noopener noreferrer" style="color:#3180ff; font-weight:bold; text-decoration:none;">
+        @shiokingyourpeacock
+    </a> for any more questions!
+    </p>
+    <div class="image-grid">
+    <img src="team1.jpg" alt="Image 1" />
+    <img src="team2.jpg" alt="Image 2" />
+    <img src="team3.jpeg" alt="Image 3" />
+  </div>
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 body {
   padding: 40px;
+  font-family: 'Roboto';
 }
 
 .container {
@@ -21,10 +22,6 @@ body {
 
 h2 {
     margin-bottom: 10px;
-}
-
-h1 {
-    padding: 20px;
 }
 
 input[type="text"] {
@@ -145,4 +142,101 @@ button:hover {
   padding: 10px 20px;
   font-size: 16px;
   white-space: nowrap;    /* Prevent button from wrapping */
+}
+
+.shake-button {
+  text-align: center;
+  padding: 12px 24px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 40px;
+  font-family: "Roboto Mono";
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  margin: auto;
+  display: block;
+  background-color: #ffd816;
+}
+
+.shake-button:hover {
+  animation: shake-rotate 0.6s infinite;
+  background-color: #3180ff;
+  color: white;
+}
+
+.shake {
+  animation: shake-rotate 0.5s ease;
+}
+
+@keyframes shake-rotate {
+  0% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-3px) rotate(-2deg); }
+  40% { transform: translateX(3px) rotate(2deg); }
+  60% { transform: translateX(-3px) rotate(-2deg); }
+  80% { transform: translateX(3px) rotate(2deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+.faq-container {
+  max-width: 700px;
+  margin: 40px auto;
+  /* border: 2px solid #ccc; */
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.faq-item {
+  border-top: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.faq-item:first-child {
+  border-top: none;
+}
+
+.faq-question {
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  color: #3180ff;
+}
+
+.faq-answer {
+  display: none;
+  margin-top: 8px;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+.faq-question::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  font-weight: bold;
+}
+
+.faq-item.active .faq-question::after {
+  content: "–";
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
 }
