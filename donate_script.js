@@ -136,6 +136,7 @@ shuffleBtn.addEventListener("click", () => {
 
   // Update donation amount
   updateDonationAmount();
+  updateNameLabel();
 
   // If Integer 2 changed, deselect all checkboxes
   if (randInt2 !== oldInteger2) {
