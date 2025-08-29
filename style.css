@@ -243,3 +243,32 @@ button:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   object-fit: cover;
 }
+
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  display: none; /* Hidden by default */
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: opacity 0.3s ease;
+
+  /* Fix for centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;              /* remove default padding */
+  line-height: 1;          /* avoid weird font metrics */
+}
+
+#scrollToTopBtn:hover {
+  background: #0056b3;
+}

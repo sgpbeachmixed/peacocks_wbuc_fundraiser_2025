@@ -22,3 +22,24 @@ document.querySelectorAll('.faq-question').forEach(question => {
     question.parentElement.classList.toggle('active');
   });
 });
+
+// SCROLL TO TOP
+const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+scrollToTopBtn.style.display = "none";
+
+// Show button when user scrolls down
+window.addEventListener("scroll", () => {
+  if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+    scrollToTopBtn.style.display = "flex";
+  } else {
+    scrollToTopBtn.style.display = "none";
+  }
+});
+
+// Scroll smoothly to top when button clicked
+scrollToTopBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
