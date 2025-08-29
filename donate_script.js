@@ -32,7 +32,8 @@ function updateDonationAmount() {
   const int1 = parseInt(integer1Input.value) || 0;
   const int2 = parseInt(integer2Input.value) || 0;
   const total = int1 * UNIT1 + int2 * UNIT2;
-  donationInput.value = total.toString();
+  // donationInput.value = total.toString();
+  donationInput.textContent = total.toString() + ".00";
   donationError.textContent = "";
   donationInput.style.borderColor = "";
 }

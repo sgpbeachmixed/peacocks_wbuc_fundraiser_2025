@@ -27,17 +27,6 @@
     <div class="container">
         <!-- First Column -->
         <div class="column">
-        <h2>Donation Amount (SGD)</h2>
-        <input
-            type="text"
-            id="donationAmount"
-            placeholder="SGD"
-        />
-        <p id="donationError" class="error-message"></p>
-        </div>
-
-        <!-- Second Column -->
-        <div class="column">
             <h2># of Baseline Runs</h2>
             <div class="input-group">
                 <input type="text" id="teamBaseline" class="integerInput" placeholder="Enter qty" />
@@ -47,7 +36,20 @@
                 <input type="text" id="assignedBaseline" class="integerInput" placeholder="Enter qty" />
                 <label for="assignedBaseline">assigned baselines <mark>($5 each)</mark></label>
             </div>
-            <button id="shuffleBtn">Shuffle Combination</button>
+            <!-- <button id="shuffleBtn">Shuffle Combination</button> -->
+        </div>
+        
+
+        <!-- Second Column -->
+         <div class="column">
+        <h2>Donation Amount (SGD)</h2>
+        <label id="donationAmount">0.00</label>
+        <!-- <input
+            type="text"
+            id="donationAmount"
+            placeholder="SGD"
+        /> -->
+        <p id="donationError" class="error-message"></p>
         </div>
     </div>
     <hr/>

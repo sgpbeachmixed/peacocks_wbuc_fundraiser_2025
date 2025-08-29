@@ -244,6 +244,11 @@ button:hover {
   object-fit: cover;
 }
 
+#donationAmount {
+  font-size: 40px;
+  font-weight: bold;
+}
+
 #scrollToTopBtn {
   position: fixed;
   bottom: 20px;
