@@ -109,42 +109,42 @@ donationInput.addEventListener("input", () => {
 });
 
 // On shuffle button click
-shuffleBtn.addEventListener("click", () => {
-  const value = parseInt(donationInput.value.trim());
+// shuffleBtn.addEventListener("click", () => {
+//   const value = parseInt(donationInput.value.trim());
 
-  if (!value || value <= 0) {
-    donationError.textContent = "Please enter a valid donation amount first.";
-    return;
-  }
+//   if (!value || value <= 0) {
+//     donationError.textContent = "Please enter a valid donation amount first.";
+//     return;
+//   }
 
-  const combos = splitDonationAmount(value);
+//   const combos = splitDonationAmount(value);
 
-  if (combos.length === 0) {
-    donationError.textContent = "No valid combinations found.";
-    return;
-  }
+//   if (combos.length === 0) {
+//     donationError.textContent = "No valid combinations found.";
+//     return;
+//   }
 
-  // Track old value of Integer 2 before updating
-  const oldInteger2 = parseInt(integer2Input.value) || 0;
+//   // Track old value of Integer 2 before updating
+//   const oldInteger2 = parseInt(integer2Input.value) || 0;
 
-  // Pick a random combination
-  const randomCombo = combos[Math.floor(Math.random() * combos.length)];
-  const [randInt1, randInt2] = randomCombo;
+//   // Pick a random combination
+//   const randomCombo = combos[Math.floor(Math.random() * combos.length)];
+//   const [randInt1, randInt2] = randomCombo;
 
-  // Update inputs
-  integer1Input.value = randInt1;
-  integer2Input.value = randInt2;
+//   // Update inputs
+//   integer1Input.value = randInt1;
+//   integer2Input.value = randInt2;
 
-  // Update donation amount
-  updateDonationAmount();
-  updateNameLabel();
+//   // Update donation amount
+//   updateDonationAmount();
+//   updateNameLabel();
 
-  // If Integer 2 changed, deselect all checkboxes
-  if (randInt2 !== oldInteger2) {
-    nameChecks.forEach(cb => cb.checked = false);
-    nameError.textContent = "";
-  }
-});
+//   // If Integer 2 changed, deselect all checkboxes
+//   if (randInt2 !== oldInteger2) {
+//     nameChecks.forEach(cb => cb.checked = false);
+//     nameError.textContent = "";
+//   }
+// });
 
 
 // Name selection
@@ -346,19 +346,3 @@ scrollToTopBtn.addEventListener("click", () => {
 //         loading.style.display = "none"
 //     });
 // });
-
-// SHAKE BUTTON
-const btn = document.getElementById("shakeBtn");
-
-function shakeButton() {
-  console.log("shakeButton")
-  btn.classList.add("shake");
-
-  // Remove the class after animation duration (0.5s)
-  setTimeout(() => {
-    btn.classList.remove("shake");
-  }, 500);
-}
-
-// Shake intermittently every 3 seconds
-setInterval(shakeButton, 3000);
