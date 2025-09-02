@@ -149,6 +149,34 @@ donationInput.addEventListener("input", () => {
 
 // Name selection
 
+// Copy name on click
+function copySpanText(element) {
+    const span = element.querySelector('span');
+
+    // Copy to clipboard
+    if (span) {
+      const text = span.textContent.trim();
+      navigator.clipboard.writeText(text)
+        .then(() => showCopiedMessage(element, text))
+        .catch(err => console.error('Copy failed', err));
+    }
+  }
+
+function showCopiedMessage(element, text) {
+  // Create message div
+  let msg = document.createElement('div');
+  msg.className = 'copied-msg show';
+  msg.textContent = 'Copied '+ text + ' to clipboard';
+  
+  element.appendChild(msg);
+
+  // Remove after 2 seconds
+  setTimeout(() => {
+    msg.classList.remove('show');
+    setTimeout(() => element.removeChild(msg), 300); // wait for transition
+  }, 500);
+}
+
 const nameChecks = document.querySelectorAll(".nameCheck");
 const nameError = document.getElementById("nameError");
 
@@ -157,24 +185,24 @@ function getInteger2Value() {
 }
 
 // Enforce max selection based on integer2
-nameChecks.forEach((checkbox) => {
-  checkbox.addEventListener("change", () => {
-    const maxAllowed = getInteger2Value();
-    const checkedBoxes = Array.from(nameChecks).filter(cb => cb.checked);
+// nameChecks.forEach((checkbox) => {
+//   checkbox.addEventListener("change", () => {
+//     const maxAllowed = getInteger2Value();
+//     const checkedBoxes = Array.from(nameChecks).filter(cb => cb.checked);
 
-    if (maxAllowed == 0) {
-      checkbox.checked = false; // undo the extra check
-      nameError.textContent = `No assigned baselines. Not allowed to select.`;
-    } else if (checkedBoxes.length > maxAllowed) {
-      checkbox.checked = false; // undo the extra check
-      nameError.textContent = `You can only select ${maxAllowed} name(s).`;
-    } else {
-      nameError.textContent = "";
-    }
+//     if (maxAllowed == 0) {
+//       checkbox.checked = false; // undo the extra check
+//       nameError.textContent = `No assigned baselines. Not allowed to select.`;
+//     } else if (checkedBoxes.length > maxAllowed) {
+//       checkbox.checked = false; // undo the extra check
+//       nameError.textContent = `You can only select ${maxAllowed} name(s).`;
+//     } else {
+//       nameError.textContent = "";
+//     }
 
-    updateNameLabel();
-  });
-});
+//     updateNameLabel();
+//   });
+// });
 
 // When Integer 2 changes, update enforcement and reset if needed
 integer2Input.addEventListener("input", () => {

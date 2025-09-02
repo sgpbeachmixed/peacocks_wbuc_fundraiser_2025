@@ -277,3 +277,29 @@ button:hover {
 #scrollToTopBtn:hover {
   background: #0056b3;
 }
+
+/* Copy name on click */
+.copy-item {
+  cursor: pointer;
+  position: relative;
+}
+
+/* Copied message */
+.copied-msg {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: lightgrey;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.copied-msg.show {
+  opacity: 1;
+}
