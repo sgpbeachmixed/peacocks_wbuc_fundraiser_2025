@@ -11,7 +11,7 @@ const nextBtn = document.getElementById("nextBtn");
 const paymentScreenshot = document.getElementById("paymentScreenshot");
 
 // Disable button by default (redundant but safe)
-nextBtn.disabled = true;
+// nextBtn.disabled = true;
 
 // paymentScreenshot.addEventListener("change", () => {
 //   if (paymentScreenshot.files.length > 0) {
@@ -92,11 +92,11 @@ donationInput.addEventListener("input", () => {
   }
   updateNameLabel();
 
-  if (amount >= UNIT1) {
-    nextBtn.disabled = false;
-  } else {  
-    nextBtn.disabled = true;
-  }
+  // if (amount >= UNIT1) {
+  //   nextBtn.disabled = false;
+  // } else {  
+  //   nextBtn.disabled = true;
+  // }
 });
 
 // On integer inputs change
@@ -194,31 +194,31 @@ integer2Input.addEventListener("input", () => {
 });
 
 // FORM REDIRECT
-document.getElementById("nextBtn").addEventListener("click", () => {
-    const donation = donationInput.value.trim();
-    const teamBaseline = integer1Input.value.trim();
-    const assignedBaseline = integer2Input.value.trim();
-    const selectedNames = Array.from(nameChecks)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value)
-        .join(", ");
+// document.getElementById("nextBtn").addEventListener("click", () => {
+//     const donation = donationInput.value.trim();
+//     const teamBaseline = integer1Input.value.trim();
+//     const assignedBaseline = integer2Input.value.trim();
+//     const selectedNames = Array.from(nameChecks)
+//         .filter(cb => cb.checked)
+//         .map(cb => cb.value)
+//         .join(", ");
 
-    // Encode values for URL
-    const encodedDonation = encodeURIComponent(donation);
-    const encodedTeam = encodeURIComponent(teamBaseline);
-    const encodedAssigned = encodeURIComponent(assignedBaseline);
-    var encodedNames = encodeURIComponent(selectedNames);
+//     // Encode values for URL
+//     const encodedDonation = encodeURIComponent(donation);
+//     const encodedTeam = encodeURIComponent(teamBaseline);
+//     const encodedAssigned = encodeURIComponent(assignedBaseline);
+//     var encodedNames = encodeURIComponent(selectedNames);
 
-    if (selectedNames == "") {
-      encodedNames = encodeURIComponent("none");
-    }
+//     if (selectedNames == "") {
+//       encodedNames = encodeURIComponent("none");
+//     }
 
-    // Construct the prefilled Google Form URL
-    const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
+//     // Construct the prefilled Google Form URL
+//     const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
 
-    // Open new tab or window
-    window.open(formURL, '_blank');
-});
+//     // Open new tab or window
+//     window.open(formURL, '_blank');
+// });
 
 // SCROLL TO TOP
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");

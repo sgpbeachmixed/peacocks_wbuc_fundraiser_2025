@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fundraising Progress Bar with Doggy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 800px;
+      background: #ddd;
+      overflow: hidden;
+      position: relative;
+      height: 30px; /* Thinner bar */
+    }
+
+    .progress {
+      background-color: #4caf50; /* Solid green */
+      height: 100%;
+      width: 0%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .doggy {
+      position: absolute;
+      width: 45px;
+      height: 45px; /* Slightly taller than bar */
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .label {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 45px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="container">
+    <div class="progress" id="progressBar"></div>
+    <img src="https://media.giphy.com/media/3oEduSbSGpGaRX2Vri/giphy.gif" class="doggy" id="doggy" alt="dog pulling progress bar">
+    <div class="label" id="label"></div>
+  </div>
+
+  <script>
+    const goalAmount = 10000;
+    const currentAmount = 6300;
+    const duration = 2000; // ms
+
+    const targetPercentage = Math.min(currentAmount / goalAmount * 100, 100);
+    const progressBar = document.getElementById('progressBar');
+    const doggy = document.getElementById('doggy');
+    const label = document.getElementById('label');
+    const container = document.getElementById('container');
+
+    function animateProgressBar() {
+      const startTime = performance.now();
+      const containerWidth = container.offsetWidth;
+      const doggyWidth = doggy.offsetWidth;
+
+      function step(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const currentPercentage = progress * targetPercentage;
+
+        // Update bar
+        progressBar.style.width = currentPercentage + "%";
+
+        // Move dog with bar
+        const doggyLeft = (currentPercentage / 100) * containerWidth - doggyWidth / 2;
+        doggy.style.left = Math.max(0, Math.min(containerWidth - doggyWidth, doggyLeft)) + 'px';
+
+        // Vertically center dog over the bar
+        const containerHeight = container.offsetHeight;
+        doggy.style.top = containerHeight / 2 + 'px';
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    label.textContent = `$${currentAmount.toLocaleString()} raised of $${goalAmount.toLocaleString()} goal`;
+    window.onload = animateProgressBar;
+  </script>
+
+</body>
+</html>
