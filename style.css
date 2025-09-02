@@ -123,8 +123,9 @@ button:hover {
 }
 
 .name-card span {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .input-row {
