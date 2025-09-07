@@ -11,7 +11,7 @@ const nextBtn = document.getElementById("nextBtn");
 const paymentScreenshot = document.getElementById("paymentScreenshot");
 
 // Disable button by default (redundant but safe)
-// nextBtn.disabled = true;
+nextBtn.disabled = true;
 
 // paymentScreenshot.addEventListener("change", () => {
 //   if (paymentScreenshot.files.length > 0) {
@@ -36,6 +36,12 @@ function updateDonationAmount() {
   donationInput.textContent = total.toString() + ".00";
   donationError.textContent = "";
   donationInput.style.borderColor = "";
+
+  if (total >= UNIT1) {
+    nextBtn.disabled = false;
+  } else {  
+    nextBtn.disabled = true;
+  }
 }
 
 // Utility: Split donation amount into integer1 and integer2
@@ -90,19 +96,21 @@ donationInput.addEventListener("input", () => {
   } else {
     donationError.textContent = "Cannot split amount with $2 and $5 units.";
   }
+  resetBackgroundAndLabel();
   updateNameLabel();
 
-  // if (amount >= UNIT1) {
-  //   nextBtn.disabled = false;
-  // } else {  
-  //   nextBtn.disabled = true;
-  // }
+  if (amount >= UNIT1) {
+    nextBtn.disabled = false;
+  } else {  
+    nextBtn.disabled = true;
+  }
 });
 
 // On integer inputs change
 [integer1Input, integer2Input].forEach((input) => {
   input.addEventListener("input", () => {
     enforceIntegerOnly(input);
+    resetBackgroundAndLabel();
     updateDonationAmount();
     updateNameLabel();
   });
@@ -150,59 +158,70 @@ donationInput.addEventListener("input", () => {
 // Name selection
 
 // Copy name on click
-function copySpanText(element) {
-    const span = element.querySelector('span');
+// function copySpanText(element) {
+//     const span = element.querySelector('span');
 
-    // Copy to clipboard
-    if (span) {
-      const text = span.textContent.trim();
-      navigator.clipboard.writeText(text)
-        .then(() => showCopiedMessage(element, text))
-        .catch(err => console.error('Copy failed', err));
-    }
-  }
+//     // Copy to clipboard
+//     if (span) {
+//       const text = span.textContent.trim();
+//       navigator.clipboard.writeText(text)
+//         .then(() => showCopiedMessage(element, text))
+//         .catch(err => console.error('Copy failed', err));
+//     }
+//   }
 
-function showCopiedMessage(element, text) {
-  // Create message div
-  let msg = document.createElement('div');
-  msg.className = 'copied-msg show';
-  msg.textContent = 'Copied '+ text + ' to clipboard';
+// function showCopiedMessage(element, text) {
+//   // Create message div
+//   let msg = document.createElement('div');
+//   msg.className = 'copied-msg show';
+//   msg.textContent = 'Copied '+ text + ' to clipboard';
   
-  element.appendChild(msg);
+//   element.appendChild(msg);
 
-  // Remove after 2 seconds
-  setTimeout(() => {
-    msg.classList.remove('show');
-    setTimeout(() => element.removeChild(msg), 300); // wait for transition
-  }, 500);
-}
+//   // Remove after 2 seconds
+//   setTimeout(() => {
+//     msg.classList.remove('show');
+//     setTimeout(() => element.removeChild(msg), 300); // wait for transition
+//   }, 500);
+// }
 
 const nameChecks = document.querySelectorAll(".nameCheck");
 const nameError = document.getElementById("nameError");
+const nameCards = document.querySelectorAll(".name-card");
 
 function getInteger2Value() {
   return parseInt(integer2Input.value) || 0;
 }
 
 // Enforce max selection based on integer2
-// nameChecks.forEach((checkbox) => {
-//   checkbox.addEventListener("change", () => {
-//     const maxAllowed = getInteger2Value();
-//     const checkedBoxes = Array.from(nameChecks).filter(cb => cb.checked);
+nameChecks.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    const maxAllowed = getInteger2Value();
+    const checkedBoxes = Array.from(nameChecks).filter(cb => cb.checked);
 
-//     if (maxAllowed == 0) {
-//       checkbox.checked = false; // undo the extra check
-//       nameError.textContent = `No assigned baselines. Not allowed to select.`;
-//     } else if (checkedBoxes.length > maxAllowed) {
-//       checkbox.checked = false; // undo the extra check
-//       nameError.textContent = `You can only select ${maxAllowed} name(s).`;
-//     } else {
-//       nameError.textContent = "";
-//     }
+    if (maxAllowed == 0) {
+      checkbox.checked = false; // undo the extra check
+      nameError.textContent = `No assigned baselines. Not allowed to select.`;
+      nameCards.forEach(nameCard => {
+        nameCard.style.backgroundColor = '#ffe6e6'; // light red
+      });
+    } else if (checkedBoxes.length > maxAllowed) {
+      checkbox.checked = false; // undo the extra check
+      nameError.textContent = `You can only select ${maxAllowed} name(s).`;
+    } else {
+      nameError.textContent = "";
+    }
 
-//     updateNameLabel();
-//   });
-// });
+    updateNameLabel();
+  });
+});
+
+function resetBackgroundAndLabel() {
+  nameError.textContent = ""
+  nameCards.forEach(nameCard => {
+    nameCard.style.backgroundColor = 'white'; 
+  });
+};
 
 // When Integer 2 changes, update enforcement and reset if needed
 integer2Input.addEventListener("input", () => {
@@ -222,31 +241,40 @@ integer2Input.addEventListener("input", () => {
 });
 
 // FORM REDIRECT
-// document.getElementById("nextBtn").addEventListener("click", () => {
-//     const donation = donationInput.value.trim();
-//     const teamBaseline = integer1Input.value.trim();
-//     const assignedBaseline = integer2Input.value.trim();
-//     const selectedNames = Array.from(nameChecks)
-//         .filter(cb => cb.checked)
-//         .map(cb => cb.value)
-//         .join(", ");
+document.getElementById("nextBtn").addEventListener("click", () => {
+    const donation = donationInput.textContent.trim();
+    const teamBaseline = integer1Input.value.trim();
+    const assignedBaseline = integer2Input.value.trim();
+    const selectedNames = Array.from(nameChecks)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value)
+        .join(", ");
 
-//     // Encode values for URL
-//     const encodedDonation = encodeURIComponent(donation);
-//     const encodedTeam = encodeURIComponent(teamBaseline);
-//     const encodedAssigned = encodeURIComponent(assignedBaseline);
-//     var encodedNames = encodeURIComponent(selectedNames);
+    // Encode values for URL
+    const encodedDonation = encodeURIComponent(donation);
+    var encodedTeam = encodeURIComponent(teamBaseline);
+    var encodedAssigned = encodeURIComponent(assignedBaseline);
+    var encodedNames = encodeURIComponent(selectedNames);
 
-//     if (selectedNames == "") {
-//       encodedNames = encodeURIComponent("none");
-//     }
+    // Fill up empty values
+    if (teamBaseline == "") {
+      encodedTeam = encodeURIComponent("0");
+    }
 
-//     // Construct the prefilled Google Form URL
-//     const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
+    if (assignedBaseline == "") {
+      encodedAssigned = encodeURIComponent("0");
+    }
 
-//     // Open new tab or window
-//     window.open(formURL, '_blank');
-// });
+    if (selectedNames == "") {
+      encodedNames = encodeURIComponent("-");
+    }
+
+    // Construct the prefilled Google Form URL
+    const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
+
+    // Open new tab or window
+    window.open(formURL, '_blank');
+});
 
 // SCROLL TO TOP
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
