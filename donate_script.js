@@ -201,7 +201,7 @@ nameChecks.forEach((checkbox) => {
 
     if (maxAllowed == 0) {
       checkbox.checked = false; // undo the extra check
-      nameError.textContent = `No assigned baselines. Not allowed to select.`;
+      nameError.textContent = `No assigned baselines. Enter no. of assigned baselines before selecting.`;
       nameCards.forEach(nameCard => {
         nameCard.style.backgroundColor = '#ffe6e6'; // light red
       });
