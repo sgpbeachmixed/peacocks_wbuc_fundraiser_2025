@@ -2,10 +2,12 @@ const donationInput = document.getElementById("donationAmount");
 const donationError = document.getElementById("donationError");
 const integer1Input = document.getElementById("teamBaseline");
 const integer2Input = document.getElementById("assignedBaseline");
+const integer3Input = document.getElementById("coachBaseline");
 const shuffleBtn = document.getElementById("shuffleBtn");
 
 const UNIT1 = 2; // $2 per unit
 const UNIT2 = 5; // $5 per unit
+const UNIT3 = 10; // $10 per unit
 
 const nextBtn = document.getElementById("nextBtn");
 const paymentScreenshot = document.getElementById("paymentScreenshot");
@@ -31,7 +33,8 @@ function enforceIntegerOnly(input) {
 function updateDonationAmount() {
   const int1 = parseInt(integer1Input.value) || 0;
   const int2 = parseInt(integer2Input.value) || 0;
-  const total = int1 * UNIT1 + int2 * UNIT2;
+  const int3 = parseInt(integer3Input.value) || 0;
+  const total = int1 * UNIT1 + int2 * UNIT2 + int3 * UNIT3;
   // donationInput.value = total.toString();
   donationInput.textContent = total.toString() + ".00";
   donationError.textContent = "";
@@ -61,15 +64,23 @@ function splitDonationAmount(amount) {
 
 // Update label when baseline changes
 function updateNameLabel() {
-    const checkboxes = document.querySelectorAll(".nameCheck");
-    const limit = parseInt(integer2Input.value) || 0;
-    const selectedCount = [...checkboxes].filter(cb => cb.checked).length;
+    const playerCheckboxes = document.querySelectorAll(".nameCheck");
+    const playerLimit = parseInt(integer2Input.value) || 0;
+    const selectedPlayerCount = [...playerCheckboxes].filter(cb => cb.checked).length;
 
-    nameLimitLabel.textContent = `You can select up to ${limit} name${limit !== 1 ? 's' : ''} (${selectedCount} selected)`;
+
+    const coachCheckboxes = document.querySelectorAll(".coachCheck");
+    const coachLimit = Math.min((parseInt(integer3Input.value) || 0), 2);
+    const selectedCoachCount = [...coachCheckboxes].filter(cb => cb.checked).length;
+
+    nameLimitLabel.textContent = `You can select up to ${playerLimit} player name${playerLimit !== 1 ? 's' : ''} (${selectedPlayerCount} selected) and ${coachLimit} coach name${coachLimit !== 1 ? 's' : ''} (${selectedCoachCount} selected)`;
 
     // Disable unchecked checkboxes if limit reached
-    checkboxes.forEach(cb => {
-        cb.disabled = !cb.checked && selectedCount >= limit;
+    playerCheckboxes.forEach(cb => {
+        cb.disabled = !cb.checked && selectedPlayerCount >= playerLimit;
+    });
+    coachCheckboxes.forEach(cb => {
+        cb.disabled = !cb.checked && selectedCoachCount >= coachLimit;
     });
 }
 
@@ -107,7 +118,7 @@ donationInput.addEventListener("input", () => {
 });
 
 // On integer inputs change
-[integer1Input, integer2Input].forEach((input) => {
+[integer1Input, integer2Input, integer3Input].forEach((input) => {
   input.addEventListener("input", () => {
     enforceIntegerOnly(input);
     resetBackgroundAndLabel();
@@ -193,9 +204,15 @@ function getInteger2Value() {
   return parseInt(integer2Input.value) || 0;
 }
 
+function getInteger3Value() {
+  return parseInt(integer3Input.value) || 0;
+}
+
 // Enforce max selection based on integer2
 nameChecks.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
+
+    // player assigned baselines
     const maxAllowed = getInteger2Value();
     const checkedBoxes = Array.from(nameChecks).filter(cb => cb.checked);
 
@@ -205,6 +222,30 @@ nameChecks.forEach((checkbox) => {
       nameCards.forEach(nameCard => {
         nameCard.style.backgroundColor = '#ffe6e6'; // light red
       });
+    } else if (checkedBoxes.length > maxAllowed) {
+      checkbox.checked = false; // undo the extra check
+      nameError.textContent = `You can only select ${maxAllowed} name(s).`;
+    } else {
+      nameError.textContent = "";
+    }
+
+    updateNameLabel();
+  });
+});
+
+
+const coachChecks = document.querySelectorAll(".coachCheck");
+
+coachChecks.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+
+    // player assigned baselines
+    const maxAllowed = getInteger3Value();
+    const checkedBoxes = Array.from(coachChecks).filter(cb => cb.checked);
+
+    if (maxAllowed == 0) {
+      checkbox.checked = false; // undo the extra check
+      nameError.textContent = `No assigned baselines for coaches. Enter no. of assigned baselines for coaches before selecting.`;
     } else if (checkedBoxes.length > maxAllowed) {
       checkbox.checked = false; // undo the extra check
       nameError.textContent = `You can only select ${maxAllowed} name(s).`;
@@ -240,21 +281,45 @@ integer2Input.addEventListener("input", () => {
   nameError.textContent = "";
 });
 
+// When Integer 3 changes, update enforcement and reset if needed
+integer3Input.addEventListener("input", () => {
+    enforceIntegerOnly(integer3Input);
+    updateDonationAmount();
+    updateNameLabel();
+
+  const maxAllowed = getInteger3Value();
+  const checkedBoxes = Array.from(coachChecks).filter(cb => cb.checked);
+
+  if (checkedBoxes.length > maxAllowed) {
+    // Uncheck extras automatically
+    checkedBoxes.slice(maxAllowed).forEach(cb => cb.checked = false);
+  }
+
+  nameError.textContent = "";
+});
+
 // FORM REDIRECT
 document.getElementById("nextBtn").addEventListener("click", () => {
     const donation = donationInput.textContent.trim();
     const teamBaseline = integer1Input.value.trim();
     const assignedBaseline = integer2Input.value.trim();
+    const coachBaseline = integer3Input.value.trim();
     const selectedNames = Array.from(nameChecks)
         .filter(cb => cb.checked)
         .map(cb => cb.value)
         .join(", ");
+    const selectedCoachNames = Array.from(coachChecks)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value)
+      .join(", ");
 
     // Encode values for URL
     const encodedDonation = encodeURIComponent(donation);
     var encodedTeam = encodeURIComponent(teamBaseline);
     var encodedAssigned = encodeURIComponent(assignedBaseline);
     var encodedNames = encodeURIComponent(selectedNames);
+    var encodedCoachAssigned = encodeURIComponent(coachBaseline);
+    var encodedCoachNames = encodeURIComponent(selectedCoachNames);
 
     // Fill up empty values
     if (teamBaseline == "") {
@@ -265,12 +330,20 @@ document.getElementById("nextBtn").addEventListener("click", () => {
       encodedAssigned = encodeURIComponent("0");
     }
 
+    if (coachBaseline == "") {
+      encodedCoachAssigned = encodeURIComponent("0");
+    }
+
     if (selectedNames == "") {
       encodedNames = encodeURIComponent("-");
     }
 
+    if (selectedCoachNames == "") {
+      encodedCoachNames = encodeURIComponent("-");
+    }
+
     // Construct the prefilled Google Form URL
-    const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}`;
+    const formURL = `https://docs.google.com/forms/d/1B18Ep-Wbrzbu6IkQKbEhcZA-2tlQ-9y3PDf0mXXUWxo/viewform?entry.53587164=${encodedDonation}&entry.410711527=${encodedTeam}&entry.223218149=${encodedAssigned}&entry.1183523693=${encodedNames}&entry.1871500344=${encodedCoachAssigned}&entry.1213971759=${encodedCoachNames}`;
 
     // Open new tab or window
     window.open(formURL, '_blank');
@@ -296,109 +369,3 @@ scrollToTopBtn.addEventListener("click", () => {
     behavior: "smooth"
   });
 });
-
-// Form Submission
-
-// document.getElementById("nextBtn").addEventListener("click", () => {
-//   const donation = donationInput.value.trim();
-//   const int1 = integer1Input.value.trim();
-//   const int2 = integer2Input.value.trim();
-//   const selectedNames = Array.from(nameChecks)
-//     .filter(cb => cb.checked)
-//     .map(cb => cb.value)
-//     .join(", ");
-
-//   const statusMsg = document.getElementById("submitStatus");
-
-//   if (!donation || !int1 || !int2) {
-//     statusMsg.textContent = "Please fill out all fields before submitting.";
-//     return;
-//   }
-
-//   // Example Google Form URL and field names
-//   const FORM_URL = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdqABE7L-T8kxDzUV0FTNRN6jfnAuttoId5ZL3BiarHOgSJ0Q/formResponse";
-//   const formData = new FormData();
-//   formData.append("entry.53587164", donation);       // Donation Amount
-//   formData.append("entry.410711527", int1);           // Integer 1
-//   formData.append("entry.223218149", int2);           // Integer 2
-//   formData.append("entry.1183523693", selectedNames);  // Selected Names
-
-//   fetch(FORM_URL, {
-//     method: "POST",
-//     mode: "no-cors",
-//     body: formData
-//   })
-//     .then(() => {
-//       statusMsg.textContent = "Submitted successfully!";
-//       statusMsg.style.color = "green";
-
-//       // Optionally clear fields
-//       // donationInput.value = "";
-//       // integer1Input.value = "";
-//       // integer2Input.value = "";
-//       // nameChecks.forEach(cb => cb.checked = false);
-//     })
-//     .catch(() => {
-//       statusMsg.textContent = "Submission failed.";
-//       statusMsg.style.color = "red";
-//     });
-// });
-
-
-// Payment Upload
-// document.getElementById("nextBtn").addEventListener("click", async () => {
-//     console.log("Button was clicked!");
-//     const donation = donationInput.value.trim();
-//     const teamBaseline = integer1Input.value.trim();
-//     const assignedBaseline = integer2Input.value.trim();
-//     const selectedNames = Array.from(nameChecks)
-//         .filter(cb => cb.checked)
-//         .map(cb => cb.value)
-//         .join(", ");
-//     const screenshotFile = document.getElementById("paymentScreenshot").files[0];
-
-//     const statusMsg = document.getElementById("submitStatus");
-
-//     if (!donation || !teamBaseline || !assignedBaseline || !screenshotFile) {
-//         statusMsg.textContent = "Please fill all fields and upload your payment screenshot.";
-//         return;
-//     }
-
-//     // Read the file as base64
-//     const base64 = await new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-//         reader.onload = () => resolve(reader.result.split(',')[1]);
-//         reader.onerror = reject;
-//         reader.readAsDataURL(screenshotFile);
-//     });
-
-//     const formData = new FormData();
-//     formData.append("donationAmount", donation);
-//     formData.append("teamBaseline", teamBaseline);
-//     formData.append("assignedBaseline", assignedBaseline);
-//     formData.append("selectedNames", selectedNames);
-//     formData.append("fileName", screenshotFile.name);
-//     formData.append("fileType", screenshotFile.type);
-//     formData.append("fileBlob", base64);
-
-//     // show loading UI
-//     const loading = document.getElementById("loading");
-//     loading.style.display = "block";
-
-//     const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyECv0mr8OeLDsBm53DJJEwCezF2pLebDcUzMyMKRUcTEWqM3Y-aI84xsUDxBeXYfd7/exec";
-//     fetch(SCRIPT_URL, {
-//         method: "POST",
-//         body: formData,
-//         redirect: "follow"
-//     })
-//     .then(() => {
-//         statusMsg.textContent = "Submitted successfully!";
-//         statusMsg.style.color = "green";
-//         loading.style.display = "none"
-//     })
-//     .catch(() => {
-//         statusMsg.textContent = "Submission failed.";
-//         statusMsg.style.color = "red";
-//         loading.style.display = "none"
-//     });
-// });

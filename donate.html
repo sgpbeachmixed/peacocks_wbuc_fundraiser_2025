@@ -31,7 +31,11 @@
             </div>
             <div class="input-group">
                 <input type="text" id="assignedBaseline" class="integerInput" placeholder="Enter qty" />
-                <label for="assignedBaseline">assigned baselines <mark>($5 each)</mark></label>
+                <label for="assignedBaseline">assigned baselines - players <mark>($5 each)</mark></label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="coachBaseline" class="integerInput" placeholder="Enter qty" />
+                <label for="coachBaseline">assigned baselines - coaches <mark>($10 each)</mark></label>
             </div>
             <!-- <button id="shuffleBtn">Shuffle Combination</button> -->
         </div>
@@ -54,14 +58,22 @@
     <div class="container">
         <!-- Name Checkbox List -->
         <div class="column" style="text-align: center;">
-            <h3 style="text-align: center;">Assign baseline runs to:</h3>
+            <h3 style="text-align: center;">Assign baseline run(s) to:</h3>
             <label id="nameLimitLabel">You can select 0 names (0 selected)</label>
             <p id="nameError" class="error-message"></p>
             <div id="nameList" class="name-grid">
                 <label class="name-card">
                 <img src="running/clive.png" alt="Clive" />
-                <input type="checkbox" class="nameCheck" value="Clive" />
+                <input type="checkbox" class="coachCheck" value="Clive" />
                 <span>Clive</span>
+                <p>(Coach)</p>
+                </label>
+
+                <label class="name-card">
+                <img src="running/janssen.png" alt="Janssen" />
+                <input type="checkbox" class="coachCheck" value="Janssen" />
+                <span>Janssen</span>
+                <p>(Coach)</p>
                 </label>
 
                 <label class="name-card">
