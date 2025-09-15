@@ -218,7 +218,7 @@ nameChecks.forEach((checkbox) => {
 
     if (maxAllowed == 0) {
       checkbox.checked = false; // undo the extra check
-      nameError.textContent = `No assigned baselines. Enter no. of assigned baselines before selecting.`;
+      nameError.textContent = `Enter no. of assigned baselines for players before selecting.`;
       nameCards.forEach(nameCard => {
         nameCard.style.backgroundColor = '#ffe6e6'; // light red
       });
@@ -245,7 +245,7 @@ coachChecks.forEach((checkbox) => {
 
     if (maxAllowed == 0) {
       checkbox.checked = false; // undo the extra check
-      nameError.textContent = `No assigned baselines for coaches. Enter no. of assigned baselines for coaches before selecting.`;
+      nameError.textContent = `Enter no. of assigned baselines for coaches before selecting.`;
     } else if (checkedBoxes.length > maxAllowed) {
       checkbox.checked = false; // undo the extra check
       nameError.textContent = `You can only select ${maxAllowed} name(s).`;
